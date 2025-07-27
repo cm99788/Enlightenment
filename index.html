@@ -4,21 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Enlightenment</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pVXmZJ8fLgHKRV6z6Hd+0+Kp/mQy6KYo7fG6OaKZLEFzyEtrC7MbrWnltgtq4a3S4bHc3xZlOe13ZGe3M1fWjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     html, body {
       margin: 0;
       padding: 0;
       font-family: 'Playfair Display', serif;
       line-height: 1.6;
-      color: #eee;
+      color: #f2f2f2;
       background-color: #111;
       overflow-x: hidden;
-    }
-
-    body {
-      scroll-behavior: auto;
+      scroll-behavior: smooth;
     }
 
     header {
@@ -26,16 +23,16 @@
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(10px);
-      padding: 12px 40px;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(12px);
+      padding: 10px 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      flex-wrap: nowrap;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      flex-wrap: wrap;
     }
 
     header a,
@@ -43,11 +40,10 @@
       color: #fff;
       text-decoration: none;
       font-weight: 600;
-      padding: 8px 18px;
+      padding: 8px 16px;
       border-radius: 6px;
-      background: rgba(255, 255, 255, 0.1);
-      transition: background 0.3s, transform 0.3s;
-      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.08);
+      transition: background 0.3s ease, transform 0.3s ease;
     }
 
     header a:hover,
@@ -58,7 +54,7 @@
 
     section {
       min-height: 100vh;
-      padding: 80px 24px;
+      padding: 60px 24px 40px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -67,152 +63,282 @@
     }
 
     .hero {
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/background.jpg') center/cover no-repeat;
+      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('images/background.jpg') center/cover no-repeat;
       color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding-top: 80px;
+      margin-top: -80px;
+      padding-top: 120px;
+      padding-bottom: 40px;
     }
 
     .hero h1 {
-      font-size: 4.5rem;
+      font-size: 4rem;
       margin-bottom: 20px;
-      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+      text-shadow: 0 0 12px rgba(255,255,255,0.25), 0 0 25px rgba(255,255,255,0.1);
     }
 
     .hero p {
-      font-size: 1.2rem;
-      max-width: 800px;
-      text-shadow: 0 0 5px rgba(0,0,0,0.6);
+      font-size: 1.1rem;
+      max-width: 850px;
+      line-height: 2;
+      text-shadow: 0 0 5px rgba(0,0,0,0.4);
+      margin-top: 10px;
     }
 
     .scroll-button {
-      margin-top: 40px;
-      padding: 14px 30px;
+      margin-top: 28px;
+      padding: 12px 28px;
       font-size: 1rem;
       font-family: 'Playfair Display', serif;
       color: white;
-      background: transparent;
+      background: rgba(255, 255, 255, 0.15);
       border: 2px solid white;
       border-radius: 6px;
       cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
 
     .scroll-button:hover {
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.15);
       transform: scale(1.05);
     }
 
     .content {
       scroll-margin-top: 100px;
-      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('images/background3.jpg') center/cover no-repeat;
+      background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('images/background3.jpg') center/cover no-repeat;
     }
 
-    .content p,
+    .slider {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 20px;
+      gap: 20px;
+    }
+
+    .slide-text-container {
+      flex: 1;
+      text-align: center;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide-text {
+      display: none;
+      font-size: 1.25rem;
+      line-height: 2;
+      text-shadow: 0 0 4px rgba(0,0,0,0.5);
+      padding: 0 20px;
+    }
+
+    .slide-text.active {
+      display: block;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .slide-arrow {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 10px;
+      user-select: none;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .slide-arrow:hover {
+      color: #ccc;
+      transform: scale(1.3);
+    }
+
+    .mobile-arrows {
+      display: none;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .desktop-arrow {
+      display: inline-block;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+        padding: 0 10px;
+      }
+
+      .slider {
+        flex-direction: column;
+        height: auto;
+        padding: 20px 12px;
+        gap: 12px;
+      }
+
+      .desktop-arrow {
+        display: none !important;
+      }
+
+      .mobile-arrows {
+        display: flex;
+        justify-content: center;
+      }
+
+      .slide-text {
+        font-size: 1rem;
+        padding: 0 10px;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .mission {
+      background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('images/background5.jpg') center/cover no-repeat;
+    }
+
+    .mission h2 {
+      font-size: 2.8rem;
+      margin-bottom: 18px;
+      text-shadow: 0 0 6px rgba(0,0,0,0.6);
+    }
+
     .mission p {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       max-width: 850px;
       margin: 16px auto;
       line-height: 2;
       text-shadow: 0 0 4px rgba(0,0,0,0.5);
     }
 
-    .mission {
-      background: linear-gradient(rgba(0,0,0,0.90), rgba(0,0,0,0.90)), url('images/background5.jpg') center/cover no-repeat;
-    }
-
-    .mission h2 {
-      font-size: 2.6rem;
-      margin-bottom: 20px;
-      text-shadow: 0 0 6px rgba(0,0,0,0.6);
-    }
-
     footer {
       background-color: #000;
       color: #aaa;
       text-align: center;
-      padding: 30px 10px;
+      padding: 24px 12px;
       font-size: 0.9rem;
     }
 
     .footer-links {
-      margin-top: 10px;
+      margin-top: 12px;
       display: flex;
       justify-content: center;
-      gap: 16px;
-    }
-
-    /* Mobile Optimization */
-    @media (max-width: 600px) {
-      header {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 6px;
-        padding: 10px;
-      }
-
-      header a {
-        font-size: 0.8rem;
-        padding: 6px 12px;
-        white-space: nowrap;
-      }
-
-      .hero h1 {
-        font-size: 2.2rem;
-      }
-
-      .hero p,
-      .content p,
-      .mission p {
-        font-size: 1rem;
-        padding: 0 10px;
-      }
+      gap: 14px;
+      flex-wrap: wrap;
     }
   </style>
 </head>
+
 <body>
   <header>
     <a href="fractal.html">Fractal Tool</a>
-    <a href="#content" onclick="document.getElementById('content').scrollIntoView({ behavior: 'smooth', block: 'center' }); return false;">Enlightenment</a>
-    <a href="#mission" onclick="document.getElementById('mission').scrollIntoView({ behavior: 'smooth', block: 'center' }); return false;">Our Mission</a>
+    <a href="#content" onclick="scrollToContent(); return false;">Enlightenment</a>
+    <a href="#mission" onclick="document.getElementById('mission').scrollIntoView({ behavior: 'smooth' }); return false;">Our Mission</a>
   </header>
 
   <section class="hero">
     <h1>Enlightenment</h1>
-    <p>One must believe humanity can be liberated from the shackles of financial slavery, and collective consciousness can attain Enlightenment.</p>
-    <button class="scroll-button" onclick="document.getElementById('content').scrollIntoView({ behavior: 'smooth', block: 'center' })">
-      What is Enlightenment?
-    </button>
+    <p>
+      Welcome to the Place of Enlightenment.<br><br>
+      This is your sign to see the nature of reality for what it is.<br>
+      Material reality has always been an illusion.<br>
+      All problems of this world can all be solved with Enlightenment and Liberation from material needs.<br>
+      Our belief can change the world.<br>
+      You can become Enlightened and Liberated.<br>
+      Humanity can be Collectively Enlightened and Liberated from our self-imposed slavery to be free.
+    </p>
+    <button class="scroll-button" onclick="scrollToContent()">What is Enlightenment?</button>
   </section>
 
   <section class="content" id="content">
-    <p>Enlightenment is the dissolution of the ego. Of everything you’ve been told you are.</p>
-    <p>A state of Non-Being.</p>
-    <p>In the state of Non-Being, insights about everything show.</p>
-    <p>To be enlightened is to see the world for what it is and not what it tries to appear to be.</p>
-    <p>Consciousness is light and energy from the geometric truths and patterns of the universe from the Absolute source.</p>
-    <p>Pure Divine Consciousness.</p>
-  </section>
+    <div class="slider">
+      <!-- Desktop Left Arrow -->
+      <button class="slide-arrow left desktop-arrow" onclick="changeSlide(-1)">&#10094;</button>
+  
+      <div class="slide-text-container">
+        <!-- Slide Texts -->
+        <div class="slide-text active">
+          Enlightenment is a state of non-attachment and non-aversion. Such state is a state of non-being. In a state of non-being, the Ego, which is the delineation between our perception of the world and attachment to things internally and the external world, dissolves.<br><br>
+          The Ego, which is the perceiver of the world, dissolves. Enlightenment is the dissolution of the ego. Of everything you’ve been told you are.<br><br>
+          When the Ego dissolves, there is a complete transcendence from the self. There is no attachment to the self, which then reveals the true state of what reality always has been this whole time. It shows our attachment to the self is a limited point of view, and even an impermanent state of being, when the flow of universal consciousness which exists formlessly has always been the true state of nature.
+        </div>
+  
+        <div class="slide-text">
+          When the distinction between the objective and the subjective dissolves through non-ego identification and non-being, that’s how we become one with the absolute flow and dao is-ness of all things to become one and understand the totality of it all.<br><br>
+          Consciousness merges with the Absolute to reveal the insights and secrets about everything, and anything. The Pure Understanding of Everything and Anything all at once. Consciousness Expands to become the awareness itself that is the essence which causes a flower to bloom, stars to form, and the fabric of space to expand.<br><br>
+          All of these words, and this is just but 1% of explaining what Enlightenment is. Enlightenment cannot be explained with the confines of language which puts meaning into boxes we term as “words”. Enlightenment is experiencing the meaning itself without the confines of language. Enlightenment is experiencing the universe reveal the secret fractals that have always been in plain sight.
+        </div>
+  
+        <div class="slide-text">
+          Enlightenment leads to the realization of truths at all levels – truth about the material reality, truth about science, truth about the nature of reality, truth about consciousness.<br><br>
+          Enlightenment is the answer to why there is something instead of nothing (when really there always has been nothing but a recursive loop of life). Enlightenment is realizing the material world is an illusion.<br><br>
+          Enlightenment is realizing the desires we crave cause our suffering. Enlightenment is realizing we come with nothing and leave with nothing, and the attachments to things cause us suffering.
+        </div>
+  
+        <div class="slide-text">
+          Enlightenment is understanding quantum physics instantly. Enlightenment is formless form to see the truth of all truth. Enlightenment is Pure Divine Consciousness.<br><br>
+          When Humanity deeply understands Enlightenment, Liberation from material needs naturally occur, and the world becomes one of compassionate intelligence; for we recognize that every sentient being has always been the same consciousness.<br><br>
+          I am you as much as you are me. When we deeply understand this, compassionate kindness to one another becomes the natural way of life.
+        </div>
 
-  <section class="mission" id="mission">
-    <h2>Our Mission</h2>
-    <p>Tokenized Enlightenment is the collective awakening of humanity.</p>
-    <p>It is the intention to free consciousness from the illusions of material society and dissolve the Ego, reconnecting us with the Absolute.</p>
-    <p>Through this awakening, we recognize the formless nature of reality and break free from self-imposed slavery.</p>
-    <p>By expanding consciousness, we move toward true financial and spiritual liberation.</p>
-    <p>CA: 4Jsv4fnNp4gwtZ6omrDhEKbmFtpmLAt6nqTqt44wpump</p>
-  </section>
-
-  <footer>
-    <div class="footer-links">
-      <a class="button" href="https://x.com/3Enlightenment6" target="_blank">X</a>
-      <a class="button" href="https://www.youtube.com/@3Enlightenment6" target="_blank">YouTube</a>
+      <!-- Mobile Arrows (below text) -->
+      <div class="mobile-arrows">
+        <button class="slide-arrow" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="slide-arrow" onclick="changeSlide(1)">&#10095;</button>
+      </div>
     </div>
-  </footer>
+
+    <!-- Desktop Right Arrow (corrected!) -->
+    <button class="slide-arrow right desktop-arrow" onclick="changeSlide(1)">&#10095;</button>
+  </div>
+</section>
+    
+
+
+<section class="mission" id="mission">
+  <h2>Our Mission</h2>
+  <p>Tokenized Enlightenment is the collective awakening of humanity.</p>
+  <p>It is the intention to free consciousness from the illusions of material society and dissolve the Ego, reconnecting us with the Absolute.</p>
+  <p>Through this awakening, we recognize the formless nature of reality and break free from self-imposed slavery.</p>
+  <p>By expanding consciousness, we move toward true financial and spiritual liberation.</p>
+  <p>CA: 4Jsv4fnNp4gwtZ6omrDhEKbmFtpmLAt6nqTqt44wpump</p>
+</section>
+
+<footer>
+  <div class="footer-links">
+    <a class="button" href="https://x.com/3Enlightenment6" target="_blank">X</a>
+    <a class="button" href="https://www.youtube.com/@3Enlightenment6" target="_blank">YouTube</a>
+  </div>
+</footer>
+
+<script>
+  function scrollToContent() {
+    const content = document.getElementById('content');
+    const offset = 0; // Increase this value if needed
+    const y = content.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide-text');
+
+  function changeSlide(direction) {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + direction + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+  }
+</script>
 </body>
 </html>
