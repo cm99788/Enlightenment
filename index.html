@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>Enlightenment</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -16,6 +16,8 @@
       background-color: #111;
       overflow-x: hidden;
       scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased;
     }
 
     header {
@@ -25,7 +27,8 @@
       width: 100%;
       background: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(12px);
-      padding: 10px 20px;
+      -webkit-backdrop-filter: blur(12px);
+      padding: 6px 20px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -33,6 +36,10 @@
       z-index: 1000;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       flex-wrap: wrap;
+      /* iPhone safe area support */
+      padding-top: max(6px, env(safe-area-inset-top));
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
     }
 
     header a,
@@ -44,16 +51,23 @@
       border-radius: 6px;
       background: rgba(255, 255, 255, 0.08);
       transition: background 0.3s ease, transform 0.3s ease;
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     header a:hover,
-    footer a.button:hover {
+    header a:active,
+    footer a.button:hover,
+    footer a.button:active {
       background: rgba(255, 255, 255, 0.2);
       transform: translateY(-1px);
     }
 
     section {
       min-height: 100vh;
+      min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
       padding: 60px 24px 40px;
       display: flex;
       flex-direction: column;
@@ -66,28 +80,31 @@
       background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('images/background.jpg') center/cover no-repeat;
       color: white;
       margin-top: -80px;
-      padding-top: 120px;
+      padding-top: max(120px, env(safe-area-inset-top) + 120px);
       padding-bottom: 40px;
+      padding-left: max(24px, env(safe-area-inset-left) + 24px);
+      padding-right: max(24px, env(safe-area-inset-right) + 24px);
     }
 
     .hero h1 {
-      font-size: 4rem;
+      font-size: clamp(2.5rem, 8vw, 5rem); /* Responsive font scaling */
       margin-bottom: 20px;
-      margin-top: -40px; /* <-- move the entire block up */
+      margin-top: -40px;
       text-shadow: 0 0 12px rgba(255,255,255,0.25), 0 0 25px rgba(255,255,255,0.1);
+      word-wrap: break-word;
     }
 
     .hero p {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 3vw, 1.1rem);
       max-width: 850px;
-      line-height: 2;
-      text-shadow: 0 0 5px rgba(0,0,0,0.4);
+      line-height: 1.8; /* Reduced for mobile readability */
+      text-shadow: 0 0 10px rgba(0,0,0,0.7), 0 0 20px rgba(0,0,0,0.5);
       margin-top: 10px;
     }
 
     .scroll-button {
       margin-top: 28px;
-      padding: 12px 28px;
+      padding: 16px 32px; /* Larger touch target */
       font-size: 1rem;
       font-family: 'Playfair Display', serif;
       color: white;
@@ -96,16 +113,21 @@
       border-radius: 6px;
       cursor: pointer;
       transition: background 0.3s ease, transform 0.3s ease;
+      min-height: 44px;
+      -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
     }
 
-    .scroll-button:hover {
-      background-color: rgba(255, 255, 255, 0.15);
+    .scroll-button:hover,
+    .scroll-button:active {
+      background-color: rgba(255, 255, 255, 0.25);
       transform: scale(1.05);
     }
 
     .content {
       scroll-margin-top: 100px;
       background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('images/background3.jpg') center/cover no-repeat;
+      padding-left: max(24px, env(safe-area-inset-left) + 24px);
+      padding-right: max(24px, env(safe-area-inset-right) + 24px);
     }
 
     .slider {
@@ -113,9 +135,9 @@
       max-width: 1000px;
       margin: 0 auto;
       display: flex;
-      flex-direction: row;
+      flex-direction: column; /* Mobile-first approach */
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       padding: 40px 20px;
       gap: 20px;
     }
@@ -132,8 +154,8 @@
 
     .slide-text {
       display: none;
-      font-size: 1.25rem;
-      line-height: 2;
+      font-size: clamp(1rem, 4vw, 1.25rem);
+      line-height: 1.8;
       text-shadow: 0 0 4px rgba(0,0,0,0.5);
       padding: 0 20px;
     }
@@ -149,56 +171,31 @@
       color: #fff;
       font-size: 2rem;
       cursor: pointer;
-      padding: 10px;
+      padding: 15px; /* Larger touch area */
       user-select: none;
       transition: transform 0.3s ease, color 0.3s ease;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .slide-arrow:hover {
+    .slide-arrow:hover,
+    .slide-arrow:active {
       color: #ccc;
       transform: scale(1.3);
     }
 
     .mobile-arrows {
-      display: none;
-      gap: 20px;
+      display: flex;
+      gap: 40px;
       margin-top: 20px;
     }
 
     .desktop-arrow {
-      display: inline-block;
-    }
-
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.8rem;
-      }
-
-      .hero p {
-        font-size: 1rem;
-        padding: 0 10px;
-      }
-
-      .slider {
-        flex-direction: column;
-        height: auto;
-        padding: 20px 12px;
-        gap: 12px;
-      }
-
-      .desktop-arrow {
-        display: none !important;
-      }
-
-      .mobile-arrows {
-        display: flex;
-        justify-content: center;
-      }
-
-      .slide-text {
-        font-size: 1rem;
-        padding: 0 10px;
-      }
+      display: none; /* Mobile-first, hide desktop arrows */
     }
 
     @keyframes fadeIn {
@@ -208,19 +205,21 @@
 
     .mission {
       background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('images/background5.jpg') center/cover no-repeat;
+      padding-left: max(24px, env(safe-area-inset-left) + 24px);
+      padding-right: max(24px, env(safe-area-inset-right) + 24px);
     }
 
     .mission h2 {
-      font-size: 2.8rem;
+      font-size: clamp(2rem, 6vw, 2.8rem);
       margin-bottom: 18px;
       text-shadow: 0 0 6px rgba(0,0,0,0.6);
     }
 
     .mission p {
-      font-size: 1.25rem;
+      font-size: clamp(1rem, 3.5vw, 1.25rem);
       max-width: 850px;
       margin: 16px auto;
-      line-height: 2;
+      line-height: 1.8;
       text-shadow: 0 0 4px rgba(0,0,0,0.5);
     }
 
@@ -230,6 +229,7 @@
       text-align: center;
       padding: 24px 12px;
       font-size: 0.9rem;
+      padding-bottom: max(24px, env(safe-area-inset-bottom) + 24px);
     }
 
     .footer-links {
@@ -239,17 +239,64 @@
       gap: 14px;
       flex-wrap: wrap;
     }
+
+    /* Larger screens (tablets and desktop) */
+    @media (min-width: 769px) {
+      .slider {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .desktop-arrow {
+        display: inline-block !important;
+      }
+
+      .mobile-arrows {
+        display: none;
+      }
+    }
+
+    /* iPhone-specific optimizations */
+    @media (max-width: 480px) {
+      header {
+        padding: 8px 16px;
+        gap: 8px;
+      }
+
+      header a {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+      }
+
+      .hero {
+        padding-top: max(100px, env(safe-area-inset-top) + 100px);
+      }
+
+      .slide-arrow {
+        font-size: 1.8rem;
+        padding: 12px;
+      }
+
+      .mobile-arrows {
+        gap: 30px;
+      }
+    }
+
+    /* Prevent zoom on input focus (iOS) */
+    input, select, textarea {
+      font-size: 16px;
+    }
   </style>
 </head>
 
 <body>
   <header>
     <a href="fractal.html">Fractal Tool</a>
-    <a href="#content" onclick="scrollToContent(); return false;">Enlightenment</a>
-    <a href="#mission" onclick="document.getElementById('mission').scrollIntoView({ behavior: 'smooth' }); return false;">Our Mission</a>
+    <a href="#content">Enlightenment</a>
+    <a href="#mission">Our Mission</a>
   </header>
 
-  <section class="hero">
+  <section id="hero" class="hero">
     <h1>Enlightenment</h1>
     <p>
       Welcome to the Place of Enlightenment.<br><br>
@@ -260,86 +307,119 @@
       You can become Enlightened and Liberated.<br>
       Humanity can be Collectively Enlightened and Liberated from our self-imposed slavery to be free.
     </p>
-    <button class="scroll-button" onclick="scrollToContent()">What is Enlightenment?</button>
+    <button class="scroll-button" onclick="document.getElementById('content').scrollIntoView()">
+      What is Enlightenment?
+    </button>
   </section>
 
-  <section class="content" id="content">
+  <section id="content" class="content">
     <div class="slider">
-      <!-- Desktop Left Arrow -->
-      <button class="slide-arrow left desktop-arrow" onclick="changeSlide(-1)">&#10094;</button>
-  
+      <button class="slide-arrow desktop-arrow" onclick="previousSlide()">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      
       <div class="slide-text-container">
-        <!-- Slide Texts -->
         <div class="slide-text active">
           Enlightenment is a state of non-attachment and non-aversion. Such state is a state of non-being. In a state of non-being, the Ego, which is the delineation between our perception of the world and attachment to things internally and the external world, dissolves.<br><br>
-          The Ego, which is the perceiver of the world, dissolves. Enlightenment is the dissolution of the ego. Of everything you’ve been told you are.<br><br>
+          The Ego, which is the perceiver of the world, dissolves. Enlightenment is the dissolution of the ego. Of everything you've been told you are.<br><br>
           When the Ego dissolves, there is a complete transcendence from the self. There is no attachment to the self, which then reveals the true state of what reality always has been this whole time. It shows our attachment to the self is a limited point of view, and even an impermanent state of being, when the flow of universal consciousness which exists formlessly has always been the true state of nature.
         </div>
-  
         <div class="slide-text">
-          When the distinction between the objective and the subjective dissolves through non-ego identification and non-being, that’s how we become one with the absolute flow and dao is-ness of all things to become one and understand the totality of it all.<br><br>
+          When the distinction between the objective and the subjective dissolves through non-ego identification and non-being, that's how we become one with the absolute flow and dao is-ness of all things to become one and understand the totality of it all.<br><br>
           Consciousness merges with the Absolute to reveal the insights and secrets about everything, and anything. The Pure Understanding of Everything and Anything all at once. Consciousness Expands to become the awareness itself that is the essence which causes a flower to bloom, stars to form, and the fabric of space to expand.<br><br>
-          All of these words, and this is just but 1% of explaining what Enlightenment is. Enlightenment cannot be explained with the confines of language which puts meaning into boxes we term as “words”. Enlightenment is experiencing the meaning itself without the confines of language. Enlightenment is experiencing the universe reveal the secret fractals that have always been in plain sight.
+          All of these words, and this is just but 1% of explaining what Enlightenment is. Enlightenment cannot be explained with the confines of language which puts meaning into boxes we term as "words". Enlightenment is experiencing the meaning itself without the confines of language. Enlightenment is experiencing the universe reveal the secret fractals that have always been in plain sight.
         </div>
-  
         <div class="slide-text">
           Enlightenment leads to the realization of truths at all levels – truth about the material reality, truth about science, truth about the nature of reality, truth about consciousness.<br><br>
           Enlightenment is the answer to why there is something instead of nothing (when really there always has been nothing but a recursive loop of life). Enlightenment is realizing the material world is an illusion.<br><br>
           Enlightenment is realizing the desires we crave cause our suffering. Enlightenment is realizing we come with nothing and leave with nothing, and the attachments to things cause us suffering.
         </div>
-  
         <div class="slide-text">
           Enlightenment is understanding quantum physics instantly. Enlightenment is formless form to see the truth of all truth. Enlightenment is Pure Divine Consciousness.<br><br>
           When Humanity deeply understands Enlightenment, Liberation from material needs naturally occur, and the world becomes one of compassionate intelligence; for we recognize that every sentient being has always been the same consciousness.<br><br>
           I am you as much as you are me. When we deeply understand this, compassionate kindness to one another becomes the natural way of life.
         </div>
-
-      <!-- Mobile Arrows (below text) -->
+      </div>
+      
+      <button class="slide-arrow desktop-arrow" onclick="nextSlide()">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      
       <div class="mobile-arrows">
-        <button class="slide-arrow" onclick="changeSlide(-1)">&#10094;</button>
-        <button class="slide-arrow" onclick="changeSlide(1)">&#10095;</button>
+        <button class="slide-arrow" onclick="previousSlide()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="slide-arrow" onclick="nextSlide()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </div>
+  </section>
 
-    <!-- Desktop Right Arrow (corrected!) -->
-    <button class="slide-arrow right desktop-arrow" onclick="changeSlide(1)">&#10095;</button>
-  </div>
-</section>
-    
+  <section id="mission" class="mission">
+    <h2>Our Mission</h2>
+    <p>Tokenized Enlightenment is the collective awakening of humanity.</p>
+    <p>It is the intention to free consciousness from the illusions of material society and dissolve the Ego, reconnecting us with the Absolute.</p>
+    <p>Through this awakening, we recognize the formless nature of reality and break free from self-imposed slavery.</p>
+    <p>By expanding consciousness, we move toward true financial and spiritual liberation.</p>
+    <p>CA: 4Jsv4fnNp4gwtZ6omrDhEKbmFtpmLAt6nqTqt44wpump</p>
+  </section>
 
+  <footer>
+    <div class="footer-links">
+      <a href="https://x.com/3Enlightenment6" target="_blank" class="button">X</a>
+      <a href="https://www.youtube.com/@3Enlightenment6" target="_blank" class="button">YouTube</a>
+    </div>
+  </footer>
 
-<section class="mission" id="mission">
-  <h2>Our Mission</h2>
-  <p>Tokenized Enlightenment is the collective awakening of humanity.</p>
-  <p>It is the intention to free consciousness from the illusions of material society and dissolve the Ego, reconnecting us with the Absolute.</p>
-  <p>Through this awakening, we recognize the formless nature of reality and break free from self-imposed slavery.</p>
-  <p>By expanding consciousness, we move toward true financial and spiritual liberation.</p>
-  <p>CA: 4Jsv4fnNp4gwtZ6omrDhEKbmFtpmLAt6nqTqt44wpump</p>
-</section>
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide-text');
+    const totalSlides = slides.length;
 
-<footer>
-  <div class="footer-links">
-    <a class="button" href="https://x.com/3Enlightenment6" target="_blank">X</a>
-    <a class="button" href="https://www.youtube.com/@3Enlightenment6" target="_blank">YouTube</a>
-  </div>
-</footer>
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      slides[index].classList.add('active');
+    }
 
-<script>
-  function scrollToContent() {
-    const content = document.getElementById('content');
-    const offset = 0; // Increase this value if needed
-    const y = content.getBoundingClientRect().top + window.pageYOffset - offset;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  }
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      showSlide(currentSlide);
+    }
 
-  let currentSlide = 0;
-  const slides = document.querySelectorAll('.slide-text');
+    function previousSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      showSlide(currentSlide);
+    }
 
-  function changeSlide(direction) {
-    slides[currentSlide].classList.remove('active');
-    currentSlide = (currentSlide + direction + slides.length) % slides.length;
-    slides[currentSlide].classList.add('active');
-  }
-</script>
+    // Auto-advance slides every 8 seconds
+    setInterval(nextSlide, 8000);
+
+    // Add touch gesture support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.querySelector('.slider').addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    document.querySelector('.slider').addEventListener('touchend', function(e) {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          nextSlide(); // Swipe left - next slide
+        } else {
+          previousSlide(); // Swipe right - previous slide
+        }
+      }
+    }
+  </script>
 </body>
 </html>
