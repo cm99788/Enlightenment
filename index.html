@@ -266,14 +266,17 @@
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        display: flex;
         justify-content: center;
         align-items: center;
+        width: 100%;
       }
 
       header a {
         padding: 8px 12px;
         font-size: 0.85rem;
         min-height: 32px;
+        text-align: center;
       }
 
       .hero {
@@ -409,6 +412,8 @@
       showSlide(currentSlide);
     }
 
+    // Auto-advance slides every 8 seconds
+    setInterval(nextSlide, 8000);
 
     // Scroll function to properly align content section
     function scrollToContent() {
