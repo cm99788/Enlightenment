@@ -4,320 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>Enlightenment</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap"></noscript>
+  
+  <!-- Inline critical CSS -->
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Playfair Display', serif;
-      line-height: 1.6;
-      color: #f2f2f2;
-      background-color: #111;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 6px 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      flex-wrap: wrap;
-      /* iPhone safe area support */
-      padding-top: max(6px, env(safe-area-inset-top));
-      padding-left: max(20px, env(safe-area-inset-left));
-      padding-right: max(20px, env(safe-area-inset-right));
-    }
-
-    header a,
-    footer a.button {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      transition: background 0.3s ease, transform 0.3s ease;
-      min-height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    header a:hover,
-    header a:active,
-    footer a.button:hover,
-    footer a.button:active {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px);
-    }
-
-    section {
-      min-height: 100vh;
-      min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
-      padding: 60px 24px 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .hero {
-      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('images/background.jpg') center/cover no-repeat;
-      color: white;
-      margin-top: -80px;
-      padding-top: max(120px, env(safe-area-inset-top) + 120px);
-      padding-bottom: 40px;
-      padding-left: max(24px, env(safe-area-inset-left) + 24px);
-      padding-right: max(24px, env(safe-area-inset-right) + 24px);
-    }
-
-    .hero h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem); /* Responsive font scaling */
-      margin-bottom: 20px;
-      margin-top: -40px;
-      text-shadow: 0 0 12px rgba(255,255,255,0.25), 0 0 25px rgba(255,255,255,0.1);
-      word-wrap: break-word;
-    }
-
-    .hero p {
-      font-size: clamp(1rem, 3vw, 1.1rem);
-      max-width: 850px;
-      line-height: 1.8; /* Reduced for mobile readability */
-      text-shadow: 0 0 10px rgba(0,0,0,0.7), 0 0 20px rgba(0,0,0,0.5);
-      margin-top: 10px;
-    }
-
-    .scroll-button {
-      margin-top: 28px;
-      padding: 16px 32px; /* Larger touch target */
-      font-size: 1rem;
-      font-family: 'Playfair Display', serif;
-      color: white;
-      background: rgba(255, 255, 255, 0.15);
-      border: 2px solid white;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease;
-      min-height: 44px;
-      -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
-    }
-
-    .scroll-button:hover,
-    .scroll-button:active {
-      background-color: rgba(255, 255, 255, 0.25);
-      transform: scale(1.05);
-    }
-
-    .content {
-      scroll-margin-top: 100px;
-      background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('images/background3.jpg') center/cover no-repeat;
-      padding-left: max(24px, env(safe-area-inset-left) + 24px);
-      padding-right: max(24px, env(safe-area-inset-right) + 24px);
-    }
-
-    .slider {
-      position: relative;
-      max-width: 1000px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column; /* Mobile-first approach */
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      gap: 20px;
-    }
-
-    .slide-text-container {
-      flex: 1;
-      text-align: center;
-      max-width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .slide-text {
-      display: none;
-      font-size: clamp(1rem, 4vw, 1.25rem);
-      line-height: 1.8;
-      text-shadow: 0 0 4px rgba(0,0,0,0.5);
-      padding: 0 20px;
-    }
-
-    .slide-text.active {
-      display: block;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-
-    .slide-arrow {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 2rem;
-      cursor: pointer;
-      padding: 15px; /* Larger touch area */
-      user-select: none;
-      transition: transform 0.3s ease, color 0.3s ease;
-      min-width: 44px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .slide-arrow:hover,
-    .slide-arrow:active {
-      color: #ccc;
-      transform: scale(1.3);
-    }
-
-    .mobile-arrows {
-      display: flex;
-      gap: 40px;
-      margin-top: 20px;
-    }
-
-    .desktop-arrow {
-      display: none; /* Mobile-first, hide desktop arrows */
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .mission {
-      background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('images/background5.jpg') center/cover no-repeat;
-      padding-left: max(24px, env(safe-area-inset-left) + 24px);
-      padding-right: max(24px, env(safe-area-inset-right) + 24px);
-    }
-
-    .mission h2 {
-      font-size: clamp(2rem, 6vw, 2.8rem);
-      margin-bottom: 18px;
-      text-shadow: 0 0 6px rgba(0,0,0,0.6);
-    }
-
-    .mission p {
-      font-size: clamp(1rem, 3.5vw, 1.25rem);
-      max-width: 850px;
-      margin: 16px auto;
-      line-height: 1.8;
-      text-shadow: 0 0 4px rgba(0,0,0,0.5);
-    }
-
-    footer {
-      background-color: #000;
-      color: #aaa;
-      text-align: center;
-      padding: 24px 12px;
-      font-size: 0.9rem;
-      padding-bottom: max(24px, env(safe-area-inset-bottom) + 24px);
-    }
-
-    .footer-links {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    /* Larger screens (tablets and desktop) */
-    @media (min-width: 769px) {
-      .slider {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-
-      .desktop-arrow {
-        display: inline-block !important;
-      }
-
-      .mobile-arrows {
-        display: none;
-      }
-    }
-
-    /* iPhone-specific optimizations */
-    @media (max-width: 480px) {
-      header {
-        position: static;
-        padding: 12px 8px;
-        gap: 8px;
-        background: rgba(0, 0, 0, 0.9);
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        width: 100%;
-        box-sizing: border-box;
-      }
-
-      header a {
-        padding: 6px 8px;
-        font-size: 0.8rem;
-        min-height: 32px;
-        text-align: center;
-        flex: 1;
-        max-width: 30%;
-      }
-
-      .hero {
-        margin-top: 0;
-        padding-top: max(40px, env(safe-area-inset-top) + 40px);
-      }
-
-      section {
-        padding: 40px 16px 40px;
-      }
-
-      .content {
-        scroll-margin-top: 0;
-      }
-
-      .mission p {
-        font-size: clamp(0.9rem, 3vw, 1.1rem);
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        hyphens: auto;
-        -webkit-hyphens: auto;
-      }
-
-      .slide-arrow {
-        font-size: 1.8rem;
-        padding: 12px;
-      }
-
-      .mobile-arrows {
-        gap: 30px;
-      }
-    }
-
-    /* Prevent zoom on input focus (iOS) */
-    input, select, textarea {
-      font-size: 16px;
-    }
+    html,body{margin:0;padding:0;font-family:'Playfair Display',serif;line-height:1.6;color:#f2f2f2;background-color:#111;overflow-x:hidden;scroll-behavior:smooth;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
+    header{position:fixed;top:0;left:0;width:100%;background:rgba(0,0,0,.65);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:6px 20px;display:flex;justify-content:center;align-items:center;gap:10px;z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,.3);flex-wrap:wrap;padding-top:max(6px,env(safe-area-inset-top));padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+    header a,footer a.button{color:#fff;text-decoration:none;font-weight:600;padding:8px 16px;border-radius:6px;background:rgba(255,255,255,.08);transition:background .3s ease,transform .3s ease;min-height:36px;display:flex;align-items:center;justify-content:center}
+    header a:hover,header a:active,footer a.button:hover,footer a.button:active{background:rgba(255,255,255,.2);transform:translateY(-1px)}
+    section{min-height:100vh;min-height:100dvh;padding:60px 24px 40px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+    .hero{background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('images/background.jpg') center/cover no-repeat;color:#fff;margin-top:-80px;padding-top:max(120px,env(safe-area-inset-top) + 120px);padding-bottom:40px;padding-left:max(24px,env(safe-area-inset-left) + 24px);padding-right:max(24px,env(safe-area-inset-right) + 24px)}
+    .hero h1{font-size:clamp(2.5rem,8vw,5rem);margin-bottom:20px;margin-top:-40px;text-shadow:0 0 12px rgba(255,255,255,.25),0 0 25px rgba(255,255,255,.1);word-wrap:break-word}
+    .hero p{font-size:clamp(1rem,3vw,1.1rem);max-width:850px;line-height:1.8;text-shadow:0 0 10px rgba(0,0,0,.7),0 0 20px rgba(0,0,0,.5);margin-top:10px}
+    .scroll-button{margin-top:28px;padding:16px 32px;font-size:1rem;font-family:'Playfair Display',serif;color:#fff;background:rgba(255,255,255,.15);border:2px solid #fff;border-radius:6px;cursor:pointer;transition:background .3s ease,transform .3s ease;min-height:44px;-webkit-tap-highlight-color:transparent}
+    .scroll-button:hover,.scroll-button:active{background-color:rgba(255,255,255,.25);transform:scale(1.05)}
   </style>
+  
+  <!-- Defer non-critical CSS -->
+  <link rel="stylesheet" href="data:text/css;base64,LmNvbnRlbnR7c2Nyb2xsLW1hcmdpbi10b3A6MTAwcHg7YmFja2dyb3VuZDpsaW5lYXItZ3JhZGllbnQocmdiYSgwLDAsMCwuNzUpLHJnYmEoMCwwLDAsLjc1KSksdXJsKCdpbWFnZXMvYmFja2dyb3VuZDMuanBnJykgY2VudGVyL2NvdmVyIG5vLXJlcGVhdDtwYWRkaW5nLWxlZnQ6bWF4KDI0cHgsZW52KHNhZmUtYXJlYS1pbnNldC1sZWZ0KSArIDI0cHgpO3BhZGRpbmctcmlnaHQ6bWF4KDI0cHgsZW52KHNhZmUtYXJlYS1pbnNldC1yaWdodCkgKyAyNHB4KX0uc2xpZGVye3Bvc2l0aW9uOnJlbGF0aXZlO21heC13aWR0aDoxMDAwcHg7bWFyZ2luOjAgYXV0bztkaXNwbGF5OmZsZXg7ZmxleC1kaXJlY3Rpb246Y29sdW1uO2FsaWduLWl0ZW1zOmNlbnRlcjtqdXN0aWZ5LWNvbnRlbnQ6Y2VudGVyO3BhZGRpbmc6NDBweCAyMHB4O2dhcDoyMHB4fS5zbGlkZS10ZXh0LWNvbnRhaW5lcntmbGV4OjE7dGV4dC1hbGlnbjpjZW50ZXI7bWF4LXdpZHRoOjEwMCU7ZGlzcGxheTpmbGV4O2ZsZXgtZGlyZWN0aW9uOmNvbHVtbjthbGlnbi1pdGVtczpjZW50ZXI7anVzdGlmeS1jb250ZW50OmNlbnRlcn0uc2xpZGUtdGV4dHtkaXNwbGF5Om5vbmU7Zm9udC1zaXplOmNsYW1wKDFyZW0sNHZ3LDEuMjVyZW0pO2xpbmUtaGVpZ2h0OjEuODt0ZXh0LXNoYWRvdzowIDAgNHB4IHJnYmEoMCwwLDAsLjUpO3BhZGRpbmc6MCAyMHB4fS5zbGlkZS10ZXh0LmFjdGl2ZXtkaXNwbGF5OmJsb2NrO2FuaW1hdGlvbjpmYWRlSW4gLjVzIGVhc2UtaW4tb3V0fS5zbGlkZS1hcnJvd3tiYWNrZ3JvdW5kOm5vbmU7Ym9yZGVyOm5vbmU7Y29sb3I6I2ZmZjtmb250LXNpemU6MnJlbTtjdXJzb3I6cG9pbnRlcjtwYWRkaW5nOjE1cHg7dXNlci1zZWxlY3Q6bm9uZTt0cmFuc2l0aW9uOnRyYW5zZm9ybSAuM3MgZWFzZSxjb2xvciAuM3MgZWFzZTttaW4td2lkdGg6NDRweDttaW4taGVpZ2h0OjQ0cHg7ZGlzcGxheTpmbGV4O2FsaWduLWl0ZW1zOmNlbnRlcjtqdXN0aWZ5LWNvbnRlbnQ6Y2VudGVyOy13ZWJraXQtdGFwLWhpZ2hsaWdodC1jb2xvcjp0cmFuc3BhcmVudH0uc2xpZGUtYXJyb3c6aG92ZXIsLnNsaWRlLWFycm93OmFjdGl2ZXtjb2xvcjojY2NjO3RyYW5zZm9ybTpzY2FsZSgxLjMpfS5tb2JpbGUtYXJyb3dze2Rpc3BsYXk6ZmxleDtnYXA6NDBweDttYXJnaW4tdG9wOjIwcHh9LmRlc2t0b3AtYXJyb3d7ZGlzcGxheTpub25lfUBrZXlmcmFtZXMgZmFkZUlue2Zyb217b3BhY2l0eTowO3RyYW5zZm9ybTp0cmFuc2xhdGVZKDEwcHgpfXRve29wYWNpdHk6MTt0cmFuc2Zvcm06dHJhbnNsYXRlWSgwKX19Lm1pc3Npb257YmFja2dyb3VuZDpsaW5lYXItZ3JhZGllbnQocmdiYSgwLDAsMCwuODUpLHJnYmEoMCwwLDAsLjg1KSksdXJsKCdpbWFnZXMvYmFja2dyb3VuZDUuanBnJykgY2VudGVyL2NvdmVyIG5vLXJlcGVhdDtwYWRkaW5nLWxlZnQ6bWF4KDI0cHgsZW52KHNhZmUtYXJlYS1pbnNldC1sZWZ0KSArIDI0cHgpO3BhZGRpbmctcmlnaHQ6bWF4KDI0cHgsZW52KHNhZmUtYXJlYS1pbnNldC1yaWdodCkgKyAyNHB4KX0ubWlzc2lvbiBoMntmb250LXNpemU6Y2xhbXAoMnJlbSw2dncsMi44cmVtKTttYXJnaW4tYm90dG9tOjE4cHg7dGV4dC1zaGFkb3c6MCA0cHggcmdiYSgwLDAsMCwuNil9Lm1pc3Npb24gcHtmb250LXNpemU6Y2xhbXAoMXJlbSwzLjV2dywxLjI1cmVtKTttYXgtd2lkdGg6ODUwcHg7bWFyZ2luOjE2cHggYXV0bztsaW5lLWhlaWdodDoxLjg7dGV4dC1zaGFkb3c6MCA0cHggcmdiYSgwLDAsMCwuNSl9Zm9vdGVye2JhY2tncm91bmQtY29sb3I6IzAwMDtjb2xvcjojYWFhO3RleHQtYWxpZ246Y2VudGVyO3BhZGRpbmc6MjRweCAxMnB4O2ZvbnQtc2l6ZTouOXJlbTtwYWRkaW5nLWJvdHRvbTptYXgoMjRweCxlbnYoc2FmZS1hcmVhLWluc2V0LWJvdHRvbSkgKyAyNHB4KX0uZm9vdGVyLWxpbmtze21hcmdpbjowO2Rpc3BsYXk6ZmxleDtqdXN0aWZ5LWNvbnRlbnQ6Y2VudGVyO2dhcDoxNHB4O2ZsZXgtd3JhcDp3cmFwfUBtZWRpYShtaW4td2lkdGg6NzY5cHgpey5zbGlkZXJ7ZmxleC1kaXJlY3Rpb246cm93O2p1c3RpZnktY29udGVudDpzcGFjZS1iZXR3ZWVufS5kZXNrdG9wLWFycm93e2Rpc3BsYXk6aW5saW5lLWJsb2NrIWltcG9ydGFudH0ubW9iaWxlLWFycm93c3tkaXNwbGF5Om5vbmV9fUBtZWRpYShtYXgtd2lkdGg6NDgwcHgpe2hlYWRlcntwb3NpdGlvbjpzdGF0aWM7cGFkZGluZzoxMnB4IDhweDtnYXA6OHB4O2JhY2tncm91bmQ6cmdiYSgwLDAsMCwuOSk7YmFja2Ryb3AtZmlsdGVyOm5vbmU7LXdlYmtpdC1iYWNrZHJvcC1maWx0ZXI6bm9uZTtib3gtc2hhZG93OjAgMnB4IDRweCByZ2JhKDAsMCwwLC4zKTtkaXNwbGF5OmZsZXg7anVzdGlmeS1jb250ZW50OnNwYWNlLWV2ZW5seTthbGlnbi1pdGVtczpjZW50ZXI7d2lkdGg6MTAwJTtib3gtc2l6aW5nOmJvcmRlci1ib3h9aGVhZGVyIGF7cGFkZGluZzo2cHggOHB4O2ZvbnQtc2l6ZTouOHJlbTttaW4taGVpZ2h0OjMycHg7dGV4dC1hbGlnbjpjZW50ZXI7ZmxleDoxO21heC13aWR0aDozMCV9Lmhlcm97bWFyZ2luLXRvcDowO3BhZGRpbmctdG9wOm1heCg0MHB4LGVudihzYWZlLWFyZWEtaW5zZXQtdG9wKSArIDQwcHgpfXNlY3Rpb257cGFkZGluZzo0MHB4IDE2cHggNDBweH0uY29udGVudHtzY3JvbGwtbWFyZ2luLXRvcDowfS5taXNzaW9uIHB7Zm9udC1zaXplOmNsYW1wKC45cmVtLDN2dywxLjFyZW0pO3dvcmQtd3JhcDpicmVhay13b3JkO292ZXJmbG93LXdyYXA6YnJlYWstd29yZDtoeXBoZW5zOmF1dG87LXdlYmtpdC1oeXBoZW5zOmF1dG99LnNsaWRlLWFycm93e2ZvbnQtc2l6ZToxLjhyZW07cGFkZGluZzoxMnB4fS5tb2JpbGUtYXJyb3dze2dhcDozMHB4fX1pbnB1dCxzZWxlY3QsdGV4dGFyZWF7Zm9udC1zaXplOjE2cHh9" media="print" onload="this.media='all'">
 </head>
 
 <body>
@@ -345,8 +52,8 @@
 
   <section id="content" class="content">
     <div class="slider">
-      <button class="slide-arrow desktop-arrow" onclick="previousSlide()">
-        <i class="fas fa-chevron-left"></i>
+      <button class="slide-arrow desktop-arrow" onclick="previousSlide()" aria-label="Previous slide">
+        ‹
       </button>
       
       <div class="slide-text-container">
@@ -372,16 +79,16 @@
         </div>
       </div>
       
-      <button class="slide-arrow desktop-arrow" onclick="nextSlide()">
-        <i class="fas fa-chevron-right"></i>
+      <button class="slide-arrow desktop-arrow" onclick="nextSlide()" aria-label="Next slide">
+        ›
       </button>
       
       <div class="mobile-arrows">
-        <button class="slide-arrow" onclick="previousSlide()">
-          <i class="fas fa-chevron-left"></i>
+        <button class="slide-arrow" onclick="previousSlide()" aria-label="Previous slide">
+          ‹
         </button>
-        <button class="slide-arrow" onclick="nextSlide()">
-          <i class="fas fa-chevron-right"></i>
+        <button class="slide-arrow" onclick="nextSlide()" aria-label="Next slide">
+          ›
         </button>
       </div>
     </div>
@@ -398,73 +105,126 @@
 
   <footer>
     <div class="footer-links">
-      <a href="https://x.com/3Enlightenment6" target="_blank" class="button">X</a>
-      <a href="https://www.youtube.com/@3Enlightenment6" target="_blank" class="button">YouTube</a>
+      <a href="https://x.com/3Enlightenment6" target="_blank" rel="noopener" class="button">X</a>
+      <a href="https://www.youtube.com/@3Enlightenment6" target="_blank" rel="noopener" class="button">YouTube</a>
     </div>
   </footer>
 
   <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide-text');
-    const totalSlides = slides.length;
-
-    function showSlide(index) {
-      slides.forEach(slide => slide.classList.remove('active'));
-      slides[index].classList.add('active');
-    }
-
-    function nextSlide() {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      showSlide(currentSlide);
-    }
-
-    function previousSlide() {
-      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      showSlide(currentSlide);
-    }
-
-
-    // Scroll function to properly align content section
-    function scrollToContent() {
-      const content = document.getElementById('content');
-      const isMobile = window.innerWidth <= 480;
+    (function() {
+      'use strict';
       
-      if (isMobile) {
-        // On mobile, header is static so just scroll to content
-        content.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        // On desktop, account for fixed header
-        const headerHeight = document.querySelector('header').offsetHeight;
-        const y = content.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-        window.scrollTo({ top: y, behavior: 'smooth' });
+      let currentSlide = 0;
+      const slides = document.querySelectorAll('.slide-text');
+      const totalSlides = slides.length;
+      let autoSlideTimer;
+
+      function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[index].classList.add('active');
       }
-    }
 
-    // Add touch gesture support for mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+      }
 
-    document.querySelector('.slider').addEventListener('touchstart', function(e) {
-      touchStartX = e.changedTouches[0].screenX;
-    });
+      function previousSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(currentSlide);
+      }
 
-    document.querySelector('.slider').addEventListener('touchend', function(e) {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    });
+      function startAutoSlide() {
+        autoSlideTimer = setInterval(nextSlide, 8000);
+      }
 
-    function handleSwipe() {
-      const swipeThreshold = 50;
-      const diff = touchStartX - touchEndX;
+      function stopAutoSlide() {
+        clearInterval(autoSlideTimer);
+      }
+
+      // Pause auto-advance on user interaction
+      const slider = document.querySelector('.slider');
+      slider.addEventListener('mouseenter', stopAutoSlide);
+      slider.addEventListener('mouseleave', startAutoSlide);
       
-      if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0) {
-          nextSlide(); // Swipe left - next slide
+      // Global functions for onclick handlers
+      window.nextSlide = function() {
+        stopAutoSlide();
+        nextSlide();
+        startAutoSlide();
+      };
+      
+      window.previousSlide = function() {
+        stopAutoSlide();
+        previousSlide();
+        startAutoSlide();
+      };
+
+      // Optimized scroll function - centers content section
+      window.scrollToContent = function() {
+        const content = document.getElementById('content');
+        const isMobile = window.innerWidth <= 480;
+        
+        if (isMobile) {
+          // On mobile, center the content section in viewport
+          const contentRect = content.getBoundingClientRect();
+          const viewportHeight = window.innerHeight;
+          const contentHeight = content.offsetHeight;
+          const targetY = content.offsetTop - (viewportHeight - contentHeight) / 2;
+          
+          window.scrollTo({ 
+            top: Math.max(0, targetY), 
+            behavior: 'smooth' 
+          });
         } else {
-          previousSlide(); // Swipe right - previous slide
+          // On desktop, account for fixed header and center the section
+          const headerHeight = 80;
+          const viewportHeight = window.innerHeight;
+          const contentHeight = content.offsetHeight;
+          const availableHeight = viewportHeight - headerHeight;
+          const targetY = content.offsetTop - headerHeight - (availableHeight - contentHeight) / 2;
+          
+          window.scrollTo({ 
+            top: Math.max(0, targetY), 
+            behavior: 'smooth' 
+          });
         }
-      }
-    }
+      };
+
+      // Optimized touch handling with passive listeners
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      slider.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      slider.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > 50) {
+          stopAutoSlide();
+          if (diff > 0) {
+            nextSlide();
+          } else {
+            previousSlide();
+          }
+          startAutoSlide();
+        }
+      }, { passive: true });
+
+      // Start auto-slide when page loads
+      startAutoSlide();
+
+      // Load Font Awesome icons asynchronously
+      const iconLink = document.createElement('link');
+      iconLink.rel = 'stylesheet';
+      iconLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+      iconLink.crossOrigin = 'anonymous';
+      iconLink.referrerPolicy = 'no-referrer';
+      document.head.appendChild(iconLink);
+    })();
   </script>
 </body>
 </html>
