@@ -16,7 +16,7 @@
     header a,footer a.button{color:#fff;text-decoration:none;font-weight:600;padding:8px 16px;border-radius:6px;background:rgba(255,255,255,.08);transition:background .3s ease,transform .3s ease;min-height:36px;display:flex;align-items:center;justify-content:center}
     header a:hover,header a:active,footer a.button:hover,footer a.button:active{background:rgba(255,255,255,.2);transform:translateY(-1px)}
     section{min-height:100vh;min-height:100dvh;padding:60px 24px 40px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
-    .hero{background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('images/background.jpg') center/cover no-repeat;color:#fff;margin-top:-80px;padding-top:max(120px,env(safe-area-inset-top) + 120px);padding-bottom:40px;padding-left:max(24px,env(safe-area-inset-left) + 24px);padding-right:max(24px,env(safe-area-inset-right) + 24px)}
+    .hero{background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('images/background.webp') center/cover no-repeat;color:#fff;margin-top:-80px;padding-top:max(120px,env(safe-area-inset-top) + 120px);padding-bottom:40px;padding-left:max(24px,env(safe-area-inset-left) + 24px);padding-right:max(24px,env(safe-area-inset-right) + 24px)}
     .hero h1{font-size:clamp(2.5rem,8vw,5rem);margin-bottom:20px;margin-top:-40px;text-shadow:0 0 12px rgba(255,255,255,.25),0 0 25px rgba(255,255,255,.1);word-wrap:break-word}
     .hero p{font-size:clamp(1rem,3vw,1.1rem);max-width:850px;line-height:1.8;text-shadow:0 0 10px rgba(0,0,0,.7),0 0 20px rgba(0,0,0,.5);margin-top:10px}
     .scroll-button{margin-top:28px;padding:16px 32px;font-size:1rem;font-family:'Playfair Display',serif;color:#fff;background:rgba(255,255,255,.15);border:2px solid #fff;border-radius:6px;cursor:pointer;transition:background .3s ease,transform .3s ease;min-height:44px;-webkit-tap-highlight-color:transparent}
@@ -133,19 +133,6 @@
         currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
         showSlide(currentSlide);
       }
-
-      function startAutoSlide() {
-        autoSlideTimer = setInterval(nextSlide, 8000);
-      }
-
-      function stopAutoSlide() {
-        clearInterval(autoSlideTimer);
-      }
-
-      // Pause auto-advance on user interaction
-      const slider = document.querySelector('.slider');
-      slider.addEventListener('mouseenter', stopAutoSlide);
-      slider.addEventListener('mouseleave', startAutoSlide);
       
       // Global functions for onclick handlers
       window.nextSlide = function() {
